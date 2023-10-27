@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import imgHome from '../assets/imgHome.jpg'
+import imgHome from '../../assets/imgHome.jpg'
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -11,7 +11,7 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { Autoplay,EffectFade, Navigation, Pagination } from 'swiper/modules';
-import CardHome from './CardHomes';
+import CardHome from '../CardHomes';
 
 export default function SliderComponent() {
   return (
