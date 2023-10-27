@@ -4,7 +4,7 @@ import { TbHome } from 'react-icons/tb'
 import Farmer from '../assets/asian_farmers_03.jpg'
 import axios from 'axios'
 import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import fireConfig from '../Config/firebase'
+import fireConfig from '../Config/Firebase'
 
 const Login = () => {
     const navigate = useNavigate()

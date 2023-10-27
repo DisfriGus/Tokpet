@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { TbHome } from 'react-icons/tb'
 import Farmer from '../assets/asian_farmers_03.jpg'
-import fireConfig from '../Config/firebase';
+import fireConfig from '../Config/Firebase';
 import { getAuth, updateCurrentUser, updatePhoneNumber, updateProfile } from 'firebase/auth';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 
@@ -31,6 +31,7 @@ const Signup = () => {
         username: username,
         phoneNumber: phone
     })
+    
     createUserWithEmailAndPassword(auth, email, password) 
       .then((user) => {
         updateProfile(auth.currentUser,{

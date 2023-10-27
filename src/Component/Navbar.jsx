@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Logo from '../assets/Logo.svg'
 import { Link } from 'react-router-dom'
 import { getAuth } from 'firebase/auth'
-import { auth } from '../Config/firebase'
 import {TbUser, TbShoppingCart} from "react-icons/tb"
 const Navbar = () => {
   let user = getAuth().currentUser;

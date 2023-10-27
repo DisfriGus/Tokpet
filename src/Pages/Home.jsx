@@ -6,7 +6,7 @@ import CardBestseller from '../Component/CardBestseller/CardBestseller'
 import axios from 'axios'
 import { getAuth } from 'firebase/auth'
 import bestSellerIMG from '../assets/BestSeller.png'
-import fireConfig from '../Config/firebase/index'
+import fireConfig from '../Config/Firebase'
 
 const Home = () => {
   useEffect(() => {
