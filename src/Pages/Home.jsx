@@ -6,10 +6,10 @@ import CardBestseller from '../Component/CardBestseller/CardBestseller'
 import axios from 'axios'
 import { getAuth } from 'firebase/auth'
 import bestSellerIMG from '../assets/BestSeller.png'
-import fireConfig from '../Config/firebase'
+
 const Home = () => {
   useEffect(() => {
-    const auth = getAuth(fireConfig)
+    const auth = getAuth()
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/v1/customer');
