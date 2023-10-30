@@ -1,4 +1,4 @@
-import React, { useEffect,useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,6 +10,7 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 import axios from 'axios'
+import Product from '../Product';
 const CardBestseller = () => {
   const [posts, setPosts] = useState([])
   useEffect(() => {
@@ -24,26 +25,27 @@ const CardBestseller = () => {
 
     fetchData();
   }, []);
+  const buyProduct = (e) => {
+    console.log(e.target)
+  }
   return (
     <>
       <Swiper
         slidesPerView={5}
         spaceBetween={20}
-        
+
         loop={true}
         navigation={true}
-        modules={[ Navigation]}
+        modules={[Navigation]}
         className="mySwiper pl-[60px]"
       >
         {posts.map((product, index) => {
-            return (
-              <SwiperSlide key={index} className=''>
-                <img src={product.url} alt="" className='h-[360px] w-[400px] object-cover' />
-                  <h1 className='font-poppins md:text-[24px] font-medium'>{product.title}</h1>
-                  <p className='font-poppins md:text-[18px] font-semibold'>{product.harga}</p>
-              </SwiperSlide>
-            )
-          })}
+          return (
+            <SwiperSlide key={index} onClick={buyProduct}>
+              <Product product={product} />
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
     </>
   )

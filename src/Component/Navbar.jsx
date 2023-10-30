@@ -21,10 +21,9 @@ const Navbar = () => {
         <p>Toko Petani</p>
       </div>
       <div className='flex gap-4'>
-        <Link>Home</Link>
-        <Link>Home</Link>
-        <Link>Home</Link>
-        <Link>Home</Link>
+        <Link>Best Seller</Link>
+        <Link>Item Terbaru</Link>
+        <Link>Riwayat Belanja</Link>
       </div>
       {isLogin ? (
         <div>
@@ -36,7 +35,7 @@ const Navbar = () => {
               value={search}
               onChange={handleChangeText}
               />
-              <button><TbShoppingCart/></button>
+              <button><Link to={`/KeranjangBelanja`}><TbShoppingCart/></Link></button>
               <button><Link to={`/EditProfile`}><TbUser/></Link></button>
           </div>
         </div>

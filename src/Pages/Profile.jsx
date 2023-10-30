@@ -7,8 +7,17 @@ import axios from 'axios';
 const Profile = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const auth = getAuth()
-    const userLogin = auth.currentUser
+    const [customer, setCustomer] = useState({
+        email: getAuth().currentUser.email,
+        username: getAuth().currentUser.displayName,
+        alamat: '',
+        nomor: getAuth().currentUser.phoneNumber
+    })
+    const handleChangeText = (e) => {
+        const { id, value } = e.target;
+        setCustomer((prevState) => ({ ...prevState, [id]: value }));
+    };
+    
     useEffect(() => {
         const currentUser = getAuth().currentUser;
         if (currentUser) {
@@ -35,7 +44,14 @@ const Profile = () => {
                 <h4 className='text-[30px]'>Edit Profile</h4>
             </div>
             <div>
-                <p>Username: {user.displayName}</p>
+                <p>Username</p>
+                <input className='border outline-none w-[920px] py-5 pl-8' type="text" id='username' value={customer.username} onChange={handleChangeText} />
+                <p>Email:</p>
+                <input className='border outline-none w-[920px] py-5 pl-8' type="text" id='email' value={customer.email} onChange={handleChangeText} />
+                <p>Alamat:</p>
+                <input className='border outline-none w-[920px] py-5 pl-8' type="text" id='alamat' value={customer.alamat} onChange={handleChangeText} />
+                <p>Nomor HP:</p>
+                <input className='border outline-none w-[920px] py-5 pl-8' type="text" id='nomor' value={customer.nomor} onChange={handleChangeText} />
                 <button onClick={handleLogout}>Logout</button>
             </div>
         </div>

@@ -3,6 +3,7 @@ import Home from "./Pages/Home"
 import Login from "./Pages/Login"
 import Signup from "./Pages/Signup"
 import Profile from "./Pages/Profile"
+import KeranjangBelanja from "./Pages/KeranjangBelanja"
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/Login" element={<Login/>}/>
           <Route path="/Signup" element={<Signup/>}/>
           <Route path="/EditProfile" element={<Profile/>}/>
+          <Route path='/KeranjangBelanja' element={<KeranjangBelanja/>}/>
         </Routes>
     </BrowserRouter>
   )
