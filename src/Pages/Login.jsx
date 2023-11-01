@@ -15,7 +15,7 @@ const Login = () => {
 
     const auth = getAuth(fireConfig)
     const handleChangeText = (e) => {
-        const { id, value } = e.target;
+        const { id, value } = e.target; 
         setCustomer((prevState) => ({ ...prevState, [id]: value }));
     };
 
