@@ -8,35 +8,46 @@ import { getAuth } from 'firebase/auth'
 import bestSellerIMG from '../assets/BestSeller.png'
 import fireConfig from '../Config/Firebase'
 import Kategori from '../Component/Kategori'
-
+import Footer from '../Component/Footer'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
+  const notify = () => {
+    toast("Item Berhasil Ditambahkan")
+  }
   useEffect(() => {
-    const auth = getAuth(fireConfig)
+    const auth = getAuth(fireConfig);
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/v1/customer');
-        const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName)
-        if (userLogin) {
-          const userId = userLogin.id; // asumsikan respons memiliki properti '_id'
-          const test = await axios.get(`http://localhost:8080/api/v1/customer/${userId}`);
-          localStorage.setItem('userData', JSON.stringify(({
-            username: test.data.username,
-            email: test.data.email,
-            phoneNumber: test.data.phoneNumber,
-            address: test.data.address
-          })))
-
-          console.log(test.data.username);
+        if (auth.currentUser) {
+          const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName);
+          if (userLogin) {
+            const userId = userLogin.id; // asumsikan respons memiliki properti '_id'
+            const test = await axios.get(`http://localhost:8080/api/v1/customer/${userId}`);
+            localStorage.setItem('userData', JSON.stringify({
+              username: test.data.username,
+              email: test.data.email,
+              phoneNumber: test.data.phoneNumber,
+              address: test.data.address
+            }));
+          }
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, []);
+  },[]);
   return (
     <Layout>
+      <ToastContainer
+      position='top-center'
+      autoClose={1000}
+      theme='light'
+      hideProgressBar
+      />
       <Navbar />
       <div className=''>
       </div>
@@ -47,12 +58,13 @@ const Home = () => {
         <img src={bestSellerIMG} className='w-[400px]' alt="" />
       </div>
       <div className=''>
-        <CardBestseller />
+        <CardBestseller onBuy={notify}/>
       </div>
       <div className='mt-[120px]'>
         <h1 className='font-poppins text-[40px] font-semibold text-center'>Kategori Belanja</h1>
         <Kategori/>
       </div>
+      <Footer/>
     </Layout>
   )
 }

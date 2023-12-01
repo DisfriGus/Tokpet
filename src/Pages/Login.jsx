@@ -7,63 +7,67 @@ import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopu
 import fireConfig from '../Config/Firebase'
 
 const Login = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [customer, setCustomer] = useState({
         email: "",
         password: ""
-    })
+    });
 
-    const auth = getAuth(fireConfig)
+    const auth = getAuth(fireConfig);
+    const [errorMessage, setErrorMessage] = useState(null);
     const handleChangeText = (e) => {
-        const { id, value } = e.target; 
+        const { id, value } = e.target;
         setCustomer((prevState) => ({ ...prevState, [id]: value }));
+    };
+
+    const updateFirebaseToken = async (customerId, firebaseToken) => {
+        try {
+            await axios.put(`https://api/v1/customer/${customerId}/update-token`, { firebaseToken });
+            console.log('update')
+        } catch (error) {
+            console.error('Error updating Firebase token:', error);
+        }
     };
 
     const handleSubmit = async () => {
         const { email, password } = customer;
         try {
-            const res = await signInWithEmailAndPassword(auth, email, password)
-            
-            console.log(res)
-            localStorage.setItem('userData', JSON.stringify({}))
-            console.log('Login Sukses');
+            const res = await signInWithEmailAndPassword(auth, email, password);
+            const user = res.user;
+            const firebaseToken = await user.getIdToken();
+
+            // Update Firebase token on the backend
+            updateFirebaseToken(user.uid, firebaseToken);
+
+            // Reset state and navigate
+            localStorage.setItem('userData', JSON.stringify({}));
             setCustomer({
                 email: '',
                 password: '',
             });
-            
-            navigate('/')
-
+            navigate('/');
         } catch (err) {
-            console.log(err);
+            console.error(err);
+            setErrorMessage(err)
         }
     };
 
     const handleLoginGoogle = async () => {
-        const provider = new GoogleAuthProvider()
+        const provider = new GoogleAuthProvider();
         try {
-            const res = await signInWithPopup(auth, provider)
-                .then((result) => {
-                    const credential = GoogleAuthProvider.credentialFromResult(result);
-                    const token = credential.accessToken;
-                    
-                    const user = result.user;
-                    navigate('/')
-                }).catch((err) => {
-                    // Handle Errors here.
-                    const errorCode = err.code;
-                    const errorMessage = err.message;
-                    // The email of the user's account used.
-                    const email = err.customData.email;
-                    // The AuthCredential type that was used.
-                    const credential = GoogleAuthProvider.credentialFromError(err);
-                    // ...
-                })
-        }catch (err){
-            console.log(err)
+            const res = await signInWithPopup(auth, provider);
+            const user = res.user;
+            const firebaseToken = await user.getIdToken();
+
+            // Update Firebase token on the backend
+            updateFirebaseToken(user.uid, firebaseToken);
+
+            // Navigate
+            navigate('/');
+        } catch (err) {
+            console.error(err);
         }
-        
-    }
+    };
 
     return (
         <div className='flex items-start font-poppins px-80 py-[120px] justify-between'>
@@ -90,6 +94,11 @@ const Login = () => {
                             value={customer.password}
                             onChange={handleChangeText}
                         />
+                    {errorMessage && (
+                        <div className="text-red-500 mt-4">
+                            Email/Password Anda Salah, Coba Lagi
+                        </div>
+                    )}
                     </div>
                     <p className='text-right mb-20'>Foreget Password ?</p>
                     <div className='flex justify-evenly'>

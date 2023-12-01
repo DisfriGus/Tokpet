@@ -4,6 +4,7 @@ import Login from "./Pages/Login"
 import Signup from "./Pages/Signup"
 import Profile from "./Pages/Profile"
 import KeranjangBelanja from "./Pages/KeranjangBelanja"
+import RiwayatBelanja from "./Pages/RiwayatBelanja"
 
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
           <Route path="/Signup" element={<Signup/>}/>
           <Route path="/EditProfile" element={<Profile/>}/>
           <Route path='/KeranjangBelanja' element={<KeranjangBelanja/>}/>
+          <Route path='/RiwayatBelanja' element={<RiwayatBelanja/>}/>
+
         </Routes>
     </BrowserRouter>
   )

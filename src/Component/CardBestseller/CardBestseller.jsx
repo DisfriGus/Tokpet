@@ -11,7 +11,14 @@ import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
 import axios from 'axios'
 import Product from '../Product';
-const CardBestseller = () => {
+
+const CartPopup = ({ handleClose }) => (
+  <div className="cart-popup">
+      <p>Item berhasil dimasukkan ke keranjang!</p>
+      <button onClick={handleClose}>Tutup</button>
+  </div>
+);
+const CardBestseller = ({onBuy}) => {
   const [posts, setPosts] = useState([])
   useEffect(() => {
     const fetchData = async () => {
@@ -25,24 +32,38 @@ const CardBestseller = () => {
 
     fetchData();
   }, []);
-  const buyProduct = (e) => {
-    console.log(e.target)
+  const buyProduct = (product) => {
+    onBuy(product)
   }
   return (
     <>
       <Swiper
-        slidesPerView={5}
-        spaceBetween={20}
+      breakpoints={{
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        
+        640: {
+          slidesPerView: 3,
+          spaceBetween: 40,
 
-        loop={true}
+        },
+        1000:{
+          slidesPerView:5,
+          spaceBetween:20,
+        }
+      }}
+        
         navigation={true}
+        loop={true}
         modules={[Navigation]}
-        className="mySwiper pl-[60px]"
+        className="mySwiper px-10 lg:pl-[60px]"
       >
         {posts.map((product, index) => {
           return (
-            <SwiperSlide key={index} onClick={buyProduct}>
-              <Product product={product} />
+            <SwiperSlide key={index}>
+              <Product product={product} onBuy={buyProduct} />
             </SwiperSlide>
           )
         })}

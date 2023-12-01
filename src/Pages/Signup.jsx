@@ -13,8 +13,11 @@ const Signup = () => {
     email: '',
     username: '',
     password: '',
-    phone: ''
+    phone: '',
+    alamat:'',
+    riwayat:[[]]
   })
+  const [errorMessage, setErrorMessage] = useState(null);
   const handleChangeText = (e) => {
     const { id, value } = e.target;
     setCustomer((prevCustomer) => ({
@@ -29,29 +32,39 @@ const Signup = () => {
         email: email,
         password: password,
         username: username,
-        phoneNumber: phone
+        phoneNumber: phone,
+        address:'' ,
+        riwayat: []
     })
     
-    createUserWithEmailAndPassword(auth, email, password) 
-      .then((user) => {
-        updateProfile(auth.currentUser,{
-          displayName:username
+    .then(() => {
+      // Rest of the code for successful registration
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((user) => {
+          updateProfile(auth.currentUser, {
+            displayName: username
+          });
+          updatePhoneNumber(user, phone);
+          navigate("/Login");
         })
-        updatePhoneNumber(user,phone)
-        navigate("/Login")
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage)
-      })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log( errorMessage);
+          setErrorMessage(errorMessage); // Set the error message state
+        });
+    })
+    .catch((axiosError) => {
+      // Handle Axios error (e.g., network error, server error)
+      console.error('Axios Error:', axiosError);
+      setErrorMessage('Error occurred during registration'); // Set a generic error message
+    });
     setCustomer({
       email: '',
       username: '',
       password: '',
       phone: ''
     });
-
   };
 
   return (
@@ -104,7 +117,16 @@ const Signup = () => {
 
           <button className='bg-[#23886D] py-[16px] text-white font-bold rounded-full' onClick={handleSubmit}>Sign up</button>
 
-
+          {errorMessage =='Firebase: Error (auth/email-already-in-use).' && (
+            <div className="text-red-500 mt-4">
+              Email Already Exist
+            </div>
+          )}
+          {errorMessage =='Firebase: Error (auth/invalid-email).' && (
+            <div className="text-red-500 mt-4">
+              Invalid Email, Coba Lagi
+            </div>
+          )}
         </div>
       </div>
       <div>
