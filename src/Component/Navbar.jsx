@@ -19,7 +19,7 @@ const Navbar = () => {
     const auth = getAuth(fireConfig);
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/customer');
+        const response = await axios.get('https://13.213.46.17:8080/api/v1/customer');
         if (auth.currentUser) {
           const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName);
           setIsLogin(userLogin)

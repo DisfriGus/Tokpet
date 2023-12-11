@@ -46,7 +46,7 @@ const KeranjangBelanja = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/customer');
+        const response = await axios.get('https://13.213.46.17:8080/api/v1/customer');
         
         if (auth.currentUser && auth.currentUser.displayName) {
           const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName);
@@ -88,7 +88,7 @@ const KeranjangBelanja = () => {
         riwayat: [riwayatArray],
       };
       console.log('Sending request with data:', updatedCustomer);
-      const response = await axios.put(`http://localhost:8080/api/v1/customer/${customer.id}`, updatedCustomer);
+      const response = await axios.put(`https://13.213.46.17:8080/api/v1/customer/${customer.id}`, updatedCustomer);
       setShowDialog(!showDialog)
       localStorage.removeItem('cartData');
     } catch (error) {

@@ -28,7 +28,7 @@ const Signup = () => {
   const auth = getAuth(fireConfig)
   const handleSubmit = () => {
     const { email, password, username, phone } = customer
-    axios.post("http://localhost:8080/api/v1/customer",{
+    axios.post("https://13.213.46.17:8080/api/v1/customer",{
         email: email,
         password: password,
         username: username,

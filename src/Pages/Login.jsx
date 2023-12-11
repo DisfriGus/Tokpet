@@ -22,7 +22,7 @@ const Login = () => {
 
     const updateFirebaseToken = async (customerId, firebaseToken) => {
         try {
-            await axios.put(`https://api/v1/customer/${customerId}/update-token`, { firebaseToken });
+            await axios.put(`httpss://api/v1/customer/${customerId}/update-token`, { firebaseToken });
             console.log('update')
         } catch (error) {
             console.error('Error updating Firebase token:', error);

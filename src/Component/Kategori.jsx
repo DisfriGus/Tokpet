@@ -9,9 +9,9 @@ const Kategori = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseCategory = await axios.get('http://localhost:8080/api/v1/category');
+                const responseCategory = await axios.get('https://13.213.46.17:8080/api/v1/category');
                 setCategory(responseCategory.data);
-                const responseTanaman = await axios.get('http://localhost:8080/api/v1/tanaman');
+                const responseTanaman = await axios.get('https://13.213.46.17:8080/api/v1/tanaman');
                 setPlants(responseTanaman.data);
             } catch (err) {
                 console.log(err);

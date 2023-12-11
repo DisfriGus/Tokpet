@@ -23,7 +23,7 @@ const CardBestseller = ({onBuy}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://13.213.46.17:8080/api/v1/tanaman');
+        const response = await axios.get('https://13.213.46.17:8080/api/v1/tanaman');
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
