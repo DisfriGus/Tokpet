@@ -57,7 +57,7 @@ const Home = () => {
       <div className='flex justify-center mt-[140px] mb-[86px]'>
         <img src={bestSellerIMG} className='w-[400px]' alt="" />
       </div>
-      <div className=''>
+      <div className='' id='bestSeller'>
         <CardBestseller onBuy={notify}/>
       </div>
       <div className='mt-[120px]'>

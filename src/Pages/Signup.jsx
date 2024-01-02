@@ -27,38 +27,43 @@ const Signup = () => {
   };
   const auth = getAuth(fireConfig)
   const handleSubmit = () => {
-    const { email, password, username, phone } = customer
-    axios.post("https://13.213.46.17:8080/api/v1/customer",{
-        email: email,
-        password: password,
-        username: username,
-        phoneNumber: phone,
-        address:'' ,
-        riwayat: []
-    })
-    
-    .then(() => {
-      // Rest of the code for successful registration
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((user) => {
-          updateProfile(auth.currentUser, {
-            displayName: username
-          });
-          updatePhoneNumber(user, phone);
-          navigate("/Login");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log( errorMessage);
-          setErrorMessage(errorMessage); // Set the error message state
+    const { email, password, username, phone } = customer;
+  
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+  
+        // Rest of the code for successful registration
+        updateProfile(auth.currentUser, {
+          displayName: username
         });
-    })
-    .catch((axiosError) => {
-      // Handle Axios error (e.g., network error, server error)
-      console.error('Axios Error:', axiosError);
-      setErrorMessage('Error occurred during registration'); // Set a generic error message
-    });
+  
+        // Perform POST request only after successful login
+        axios.post("http://localhost:8080/api/v1/customer", {
+          email: email,
+          password: password,
+          username: username,
+          phoneNumber: phone,
+          address: '',
+          riwayat: []
+        })
+          .then(() => {
+            // Rest of the code for successful registration
+            navigate("/Login");
+          })
+          .catch((axiosError) => {
+            // Handle Axios error (e.g., network error, server error)
+            console.error('Axios Error:', axiosError);
+            setErrorMessage('Error occurred during registration'); // Set a generic error message
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        setErrorMessage(errorMessage); // Set the error message state
+      });
+  
     setCustomer({
       email: '',
       username: '',
@@ -66,6 +71,7 @@ const Signup = () => {
       phone: ''
     });
   };
+  
 
   return (
     <div className='flex items-center font-poppins px-80 py-[120px] justify-between'>
@@ -93,7 +99,7 @@ const Signup = () => {
               onChange={handleChangeText}
             />
           </div>
-          <div>
+          <div> 
             <p className='text-[24px]'>Password</p>
             <input
               type="password"
@@ -125,6 +131,11 @@ const Signup = () => {
           {errorMessage =='Firebase: Error (auth/invalid-email).' && (
             <div className="text-red-500 mt-4">
               Invalid Email, Coba Lagi
+            </div>
+          )}
+          {errorMessage =='Firebase: Password should be at least 6 characters (auth/weak-password).' && (
+            <div className="text-red-500 mt-4">
+              Mohon Masukkan 6 karakter
             </div>
           )}
         </div>

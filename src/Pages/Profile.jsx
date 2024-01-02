@@ -28,7 +28,7 @@ const Profile = () => {
         }
         const fetchData = async () => {
             try {
-              const response = await axios.get('https://13.213.46.17:8080/api/v1/customer');
+              const response = await axios.get('http://localhost:8080/api/v1/customer');
               if (auth.currentUser) {
                 const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName);
                 if (userLogin) {
@@ -40,7 +40,7 @@ const Profile = () => {
                         nomor:userLogin.phoneNumber,
                         alamat:userLogin.address
                     })
-                  const test = await axios.get(`https://13.213.46.17:8080/api/v1/customer/${userId}`);
+                  const test = await axios.get(`http://localhost:8080/api/v1/customer/${userId}`);
                   console.log(test)
                 }
               }
@@ -68,7 +68,7 @@ const Profile = () => {
     const handleUpdateProfile = async () => {
         
         try {
-            const response = await axios.put(`https://13.213.46.17:8080/api/v1/customer/${customer.id}`, {
+            const response = await axios.put(`http://localhost:8080/api/v1/customer/${customer.id}`, {
                 address: customer.alamat,
                 phoneNumber: customer.nomor,
             });

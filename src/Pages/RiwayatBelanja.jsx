@@ -14,8 +14,8 @@ const RiwayatBelanja = () => {
         const fetchData = async () => {
             const auth = getAuth();
             try {
-                const responseCustomer = await axios.get('https://13.213.46.17:8080/api/v1/customer');
-                const responseTanaman = await axios.get('https://13.213.46.17:8080/api/v1/tanaman');
+                const responseCustomer = await axios.get('http://localhost:8080/api/v1/customer');
+                const responseTanaman = await axios.get('http://localhost:8080/api/v1/tanaman');
                 const userLogin = responseCustomer.data.find((user) => user.username === auth.currentUser.displayName);
                 const foundRiwayats = [];
 

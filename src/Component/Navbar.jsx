@@ -19,7 +19,7 @@ const Navbar = () => {
     const auth = getAuth(fireConfig);
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://13.213.46.17:8080/api/v1/customer');
+        const response = await axios.get('http://localhost:8080/api/v1/customer');
         if (auth.currentUser) {
           const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName);
           setIsLogin(userLogin)
@@ -34,7 +34,13 @@ const Navbar = () => {
   const handleChangeText = (e) => {
     setSearch(e.target.value)
   };
+  const handleScroll = (targetId) => {
+    const targetElement = document.getElementById(targetId);
 
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
   return (
     <div className='max-lg:overflow-hidden fixed z-20 w-screen'>
       <div className='flex items-center px-4 xl:px-[240px] py-4 justify-between bg-[#23886D] text-white'>
@@ -43,7 +49,7 @@ const Navbar = () => {
           <p>Toko Petani</p>
         </div>
         <div className='flex gap-4 max-lg:hidden '>
-          <Link>Best Seller</Link>
+          <Link onClick={() => handleScroll('bestSeller')}>Best Seller</Link>
           <Link>Item Terbaru</Link>
           <Link to={`/RiwayatBelanja`}>Riwayat Belanja</Link>
         </div>

@@ -76,7 +76,7 @@ const Login = () => {
                 <p className='text-[#444B59] font-thin mb-12 '>Don't have account, <Link to={`/Signup`} className='text-[#23886D]'>Sign Up</Link></p>
                 <div className='flex flex-col gap-6' action="">
                     <div className=''>
-                        <p className='text-[24px]'>Username</p>
+                        <p className='text-[24px]'>Email</p>
                         <input
                             type="text"
                             className='outline-none border w-[400px] px-7 py-4 rounded-full'

@@ -27,13 +27,9 @@ const KeranjangBelanja = () => {
   const [showDialog, setShowDialog]= useState(false)
   
 
-  const handlePaymentChange = (e) => {
-    setSelectedPayment(e.target.value);
-  };
+  
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  ;
 
   const [cartData, setCartData] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
@@ -46,7 +42,7 @@ const KeranjangBelanja = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://13.213.46.17:8080/api/v1/customer');
+        const response = await axios.get('http://localhost:8080/api/v1/customer');
         
         if (auth.currentUser && auth.currentUser.displayName) {
           const userLogin = response.data.find((user) => user.username === auth.currentUser.displayName);
@@ -60,7 +56,6 @@ const KeranjangBelanja = () => {
               username: userLogin.username,
               riwayat: userLogin.riwayat
             }));
-            console.log(customer.riwayat)
           }
         }
       } catch (error) {
@@ -88,7 +83,7 @@ const KeranjangBelanja = () => {
         riwayat: [riwayatArray],
       };
       console.log('Sending request with data:', updatedCustomer);
-      const response = await axios.put(`https://13.213.46.17:8080/api/v1/customer/${customer.id}`, updatedCustomer);
+      const response = await axios.put(`http://localhost:8080/api/v1/customer/${customer.id}`, updatedCustomer);
       setShowDialog(!showDialog)
       localStorage.removeItem('cartData');
     } catch (error) {
@@ -99,7 +94,7 @@ const KeranjangBelanja = () => {
 
     return (
         <div className='mx-2 lg:mx-[72px] flex mt-8 justify-evenly font-poppins max-2xl:flex-col'>
-          {showDialog && (<PaymentSuccessDialog handleDialog={handlePesanan} total={subTotal*2} />)}
+          {showDialog && (<PaymentSuccessDialog handleDialog={handlePesanan} pembayaran={selectedPayment} total={subTotal*2} />)}
             <div>
                 <div className='flex lg:gap-6 mb-[52px] items-center'>
                     <button className='text-[32px]' onClick={() => navigate(-1)}><TbArrowNarrowLeft /></button>
@@ -166,16 +161,16 @@ const KeranjangBelanja = () => {
                 <div className='mt-8'>
                     <h1 className='text-[20px] mb-6 text-[#444B59] tracking-[2px]'>Opsi Pembayaran</h1>
                     <div className='flex max-lg:flex-wrap gap-[38px] '>
-                        <button>
-                            <img src={DANA} alt="TIKI" />
+                        <button onClick={()=>setSelectedPayment('DANA')} >
+                            <img src={DANA} alt="TIKI"  />
                         </button>
-                        <button>
+                        <button onClick={()=>setSelectedPayment('GOPAY')}>
                             <img src={GOPAY} alt="GOPAY" />
                         </button>
-                        <button>
+                        <button onClick={()=>setSelectedPayment('LINKAJA')}>
                             <img src={LINKAJA} alt="LINKAJA" />
                         </button>
-                        <button>
+                        <button onClick={()=>setSelectedPayment('OVO')}>
                             <img src={OVO} alt="OVO" />
                         </button>
                     </div>

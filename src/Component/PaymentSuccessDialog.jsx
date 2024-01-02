@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
-const PaymentSuccessDialog = ({ handleDialog, total }) => {
+const PaymentSuccessDialog = ({ handleDialog, total, pembayaran }) => {
     const navigate = useNavigate()
     const [totalHarga, setTotalHarga] = useState(0)
     const currentDate = new Date();
@@ -77,7 +77,7 @@ const PaymentSuccessDialog = ({ handleDialog, total }) => {
                     </div>
                     <div className='flex flex-row justify-between items-center w-full mb-[18px] max-sm:hidden'>
                         <h1 className='text-[#8F8F8F] font-inter text-[16px] font-medium'>Payment Method</h1>
-                        <h1 className='font-inter text-right text-[16px] font-medium text-[#031C32]'>OVO</h1>
+                        <h1 className='font-inter text-right text-[16px] font-medium text-[#031C32]'>{pembayaran}</h1>
                     </div>
                     <div className='flex flex-row justify-between items-center w-full mb-[18px] max-sm:hidden'>
                         <h1 className='text-[#8F8F8F] font-inter text-[16px] font-medium'>Ref Number</h1>
